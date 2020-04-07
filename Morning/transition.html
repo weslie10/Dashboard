@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		body {
+			width: 100vw;
+			height: 100vh;
+		}
+		.trans {
+			position: relative;
+			margin: auto;
+			width: 100vw;
+			height: 20vh;
+			background-color: deepskyblue;
+			transform: translateX(-10vw);
+			z-index: 2;
+		}
+		.button {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.center {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			position: absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			margin: auto;
+			width: 200px;
+			height: 200px;
+		}
+		#toggle {
+			width: 100px;
+			height: 40px;
+			z-index: 1;
+		}
+		#loader {
+			width: 50px;
+			height: 50px;
+			border: 7px solid #f3f3f3;
+			border-top: 7px solid rgb(71, 144, 212);
+			border-radius: 50%;
+			animation: loading 1s linear infinite;
+			display: none;
+			z-index: 3;
+		}
+		@keyframes move {
+			0% {
+				transform: translateX(-100vw);
+			}
+			20% {
+				transform: translateX(0);
+			}
+			80% {
+				transform: translateX(0);
+			}
+			100% {
+				transform: translateX(-100vw);
+			}
+		}
+		@keyframes loading {
+			from {
+				transform: rotate(0);
+			}
+			to {
+				transform: rotate(360deg);
+			}
+		}
+	</style>
+	<body>
+		<div class="trans"></div>
+		<div class="trans"></div>
+		<div class="trans"></div>
+		<div class="trans"></div>
+		<div class="trans"></div>
+		<div class="center">
+			<button id="toggle" onclick="toggle()">Click Me</button>
+			<div id="loader"></div>
+		</div>
+	</body>
+	<script>
+		const trans = document.getElementsByClassName('trans');
+		const time = 4000;
+		const toggle = () => {
+			for (let i = 0; i < trans.length; i++) {
+				trans[i].style.animation = `move ${4000 / 500}s ${i /
+					2}s ease-in-out forwards`;
+			}
+			setTimeout(() => {
+				setTimeout(() => {
+					//show button
+					document.getElementById('toggle').style.display = 'block';
+					document.getElementById('loader').style.display = 'none';
+					//after animation
+					setTimeout(() => {
+						for (let i = 0; i < trans.length; i++) {
+							trans[i].style.removeProperty('animation');
+						}
+					}, time);
+				}, time / 2);
+				//show loader
+				document.getElementById('toggle').style.display = 'none';
+				document.getElementById('loader').style.display = 'block';
+			}, time);
+		};
+	</script>
+</html>
